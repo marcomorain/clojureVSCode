@@ -1,0 +1,31 @@
+version: 2
+
+jobs:
+  build:
+    docker:
+      - image: circleci/node:9-browsers
+    steps:
+        - checkout
+        - restore_cache:
+            keys:
+              - node-modules-{{ checksum "package.json" }}
+              - node-modules- # used if checksum fails
+        - run: npm install
+        - run: npm run vscode:prepublish
+        - save_cache:
+            paths:
+              - node_modules
+            key: node-modules-{{ checksum "package.json" }}
+        - run: npm test --silent
+
+#os:
+#  - osx
+#  - linux
+
+#before_install:
+#  - if [ $TRAVIS_OS_NAME == "linux" ]; then
+#      export CXX="g++-4.9" CC="gcc-4.9" DISPLAY=:99.0;
+#      sh -e /etc/init.d/xvfb start;
+#      sleep 3;
+#    fi
+#
