@@ -190,7 +190,7 @@ function handleError(outputChannel: vscode.OutputChannel, selection: vscode.Sele
             outputChannel.appendLine(`${stacktraceObj.class} ${stacktraceObj.message}`);
             outputChannel.appendLine(` at ${stacktraceObj.file}:${errLine}:${errChar}`);
 
-            stacktraceObj.stacktrace.forEach((trace: any) => {
+            stacktraceObj.stacktrace && stacktraceObj.stacktrace.forEach((trace: any) => {
                 if (trace.flags.indexOf('tooling') > -1)
                     outputChannel.appendLine(`    ${trace.class}.${trace.method} (${trace.file}:${trace.line})`);
             });

@@ -37,7 +37,7 @@ export class ClojureCompletionItemProvider implements vscode.CompletionItemProvi
         }
 
         return nreplClient.complete(currentWord, ns).then(completions => {
-            if (!('completions' in completions))
+            if (!completions.completions)
                 return Promise.reject(undefined);
 
             let suggestions = completions.completions.map((element: any) => ({

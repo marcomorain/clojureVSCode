@@ -22,6 +22,13 @@ export class ClojureDefinitionProvider implements vscode.DefinitionProvider {
                 if (!info.file)
                     return Promise.reject('No word definition found.');
 
+                if (!info.column) {
+                    info.column = 1
+                }
+                if (!info.line) {
+                    info.line = 1
+                }
+
                 let uri = vscode.Uri.parse(info.file);
                 let pos = new vscode.Position(info.line - 1, info.column)
                 let definition = new vscode.Location(uri, pos);
